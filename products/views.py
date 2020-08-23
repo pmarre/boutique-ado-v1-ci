@@ -1,7 +1,9 @@
+
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
 from django.db.models.functions import Lower
+
 from .models import Product, Category
 
 # Create your views here.
@@ -12,9 +14,9 @@ def all_products(request):
 
     products = Product.objects.all()
     query = None
+    categories = None
     sort = None
     direction = None
-    categories = None
 
     if request.GET:
         if 'sort' in request.GET:
@@ -23,10 +25,8 @@ def all_products(request):
             if sortkey == 'name':
                 sortkey = 'lower_name'
                 products = products.annotate(lower_name=Lower('name'))
-
             if sortkey == 'category':
                 sortkey = 'category__name'
-
             if 'direction' in request.GET:
                 direction = request.GET['direction']
                 if direction == 'desc':
@@ -41,7 +41,8 @@ def all_products(request):
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
-                messages.error(request, 'Enter searhch criteria!')
+                messages.error(
+                    request, "You didn't enter any search criteria!")
                 return redirect(reverse('products'))
 
             queries = Q(name__icontains=query) | Q(
