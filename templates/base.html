@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,8 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    {% endblock%} {% block extra_meta %} {% endblock %} {% block core_css %}
-
+    {% endblock %} {% block extra_meta %} {% endblock %} {% block corecss %}
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -18,19 +18,18 @@
       crossorigin="anonymous"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
     />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-
-    {% endblock %} {% block extra_css %} {% endblock %} {% block core_js %}
+    {% endblock %} {% block extra_css %} {% endblock %} {% block corejs %}
     <script
-      src="https://kit.fontawesome.com/cced6347e4.js"
+      src="https://kit.fontawesome.com/e9c73d7092.js"
       crossorigin="anonymous"
     ></script>
     <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"
     ></script>
     <script
@@ -44,6 +43,7 @@
       crossorigin="anonymous"
     ></script>
     {% endblock %} {% block extra_js %} {% endblock %}
+
     <title>Boutique Ado {% block extra_title %}{% endblock %}</title>
   </head>
   <body>
@@ -101,16 +101,22 @@
                 aria-labelledby="user-options"
               >
                 {% if request.user.is_authenticated %}
-                <!-- If statement -->
+                <!--  -->
                 {% if request.user.is_superuser %}
                 <a href="" class="dropdown-item">Product Management</a>
-
+                {% endif %}
                 <a href="" class="dropdown-item">My Profile</a>
-                <a href="" class="dropdown-item">Logout</a>
+                <a href="{% url 'account_logout' %}" class="dropdown-item"
+                  >Logout</a
+                >
                 {% else %}
-                <a href="" class="dropdown-item">Register</a>
-                <a href="" class="dropdown-item">Login</a>
-                {% endif %} {% endif %}
+                <a href="{% url 'account_signup' %}" class="dropdown-item"
+                  >Register</a
+                >
+                <a href="{% url 'account_login' %}" class="dropdown-item"
+                  >Login</a
+                >
+                {% endif %}
               </div>
             </li>
             <li class="list-inline-item">
@@ -119,12 +125,10 @@
                 href="{% url 'view_bag' %}"
               >
                 <div class="text-center">
-                  <div>
-                    <i class="fas fa-shopping-bag fa-lg"></i>
-                  </div>
+                  <div><i class="fas fa-shopping-bag fa-lg"></i></div>
                   <p class="my-0">
                     {% if grand_total %} ${{ grand_total|floatformat:2 }}
-                    <!-- Else 0.00 -->
+                    <!--  -->
                     {% else %} $0.00 {% endif %}
                   </p>
                 </div>
@@ -134,7 +138,7 @@
         </div>
       </div>
       <div class="row bg-white">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+        <nav class="navbar navbar-expand-lg navbar-light w-100">
           <button
             class="navbar-toggler"
             type="button"
@@ -146,9 +150,8 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <!-- Mobile Nav -->
           {% include 'includes/mobile-top-header.html' %}
-          <!-- Main Nav -->
+          <!--  -->
           {% include 'includes/main-nav.html' %}
         </nav>
       </div>
@@ -160,9 +163,41 @@
         </div>
       </div>
     </header>
+
     {% if messages %}
-    <div class="message-container"></div>
-    {% endif %} {% block page_header %}{% endblock %} {% block content %}
-    {%endblock %} {% block postloadjs %}{% endblock %}
+    <div class="message-container">
+      {% for message in messages %}
+      <!--  -->
+      {% with message.level as level %}
+      <!--  -->
+      {% if level == 40 %}
+      <!--  -->
+      {% include 'includes/toasts/toast_error.html' %}
+      <!--  -->
+      {% elif level == 30 %}
+      <!--  -->
+      {% include 'includes/toasts/toast_warning.html' %}
+      <!--  -->
+      {% elif level == 25 %}
+      <!--  -->
+      {% include 'includes/toasts/toast_success.html' %}
+      <!--  -->
+      {% else %}
+      <!--  -->
+      {% include 'includes/toasts/toast_info.html' %}
+      <!--  -->
+      {% endif %}
+      <!--  -->
+      {% endwith %}
+      <!--  -->
+      {% endfor %}
+    </div>
+    {% endif %} {% block page_header %} {% endblock %} {% block content %}
+    <!--  -->
+    {% endblock %} {% block postloadjs %}
+    <script type="text/javascript">
+      $('.toast').toast('show');
+    </script>
+    {% endblock %}
   </body>
 </html>
