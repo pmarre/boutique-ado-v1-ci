@@ -1,13 +1,12 @@
-{% extends 'base.html' %} {% load static %} {% load bag_tools %}
-
-<!-- page header -->
+{% extends "base.html" %} {% load static %} {% load bag_tools %}
+<!--  -->
 {% block page_header %}
 <div class="container header-container">
   <div class="row">
     <div class="col"></div>
   </div>
 </div>
-{% endblock%} {% block content %}
+{% endblock %} {% block content %}
 <div class="overlay"></div>
 <div class="container mb-2">
   <div class="row">
@@ -21,7 +20,7 @@
   <div class="row">
     <div class="col">
       {% if bag_items %}
-      <div class="table-repsonsive rounded">
+      <div class="table-responsive rounded">
         <table class="table table-sm table-borderless">
           <thead class="text-black">
             <tr>
@@ -44,11 +43,10 @@
             <td class="py-3">
               <p class="my-0"><strong>{{ item.product.name }}</strong></p>
               <p class="my-0">
-                <strong>Size: </strong>{% if item.product.has_sizes%}
-                <!-- size -->
-                {{item.size|upper }} {% else %}N/A{% endif %}
+                <strong>Size: </strong>{% if item.product.has_sizes %}
+                <!--  -->
+                {{ item.size|upper }} {% else %}N/A{% endif %}
               </p>
-
               <p class="my-0 small text-muted">
                 SKU: {{ item.product.sku|upper }}
               </p>
@@ -58,9 +56,9 @@
             </td>
             <td class="py-3 w-25">
               <form
+                class="form update-form"
                 method="POST"
                 action="{% url 'adjust_bag' item.item_id %}"
-                class="update-form form"
               >
                 {% csrf_token %}
                 <div class="form-group">
@@ -159,7 +157,7 @@
         </table>
       </div>
       {% else %}
-      <p class="lead mb-5">Your bag is empty</p>
+      <p class="lead mb-5">Your bag is empty.</p>
       <a
         href="{% url 'products' %}"
         class="btn btn-outline-black rounded-0 btn-lg"
@@ -173,18 +171,20 @@
     </div>
   </div>
 </div>
-
-{% endblock%} {% block postloadjs %} {{ block.super }}
-<!-- Scripts -->
+{% endblock %}
+<!--  -->
+{% block postloadjs %} {{ block.super }}
+<!--  -->
 {% include 'products/includes/quantity_input_script.html' %}
-<script>
-  // Update quantity in cart
+
+<script type="text/javascript">
+  // Update quantity on click
   $('.update-link').click(function (e) {
     var form = $(this).prev('.update-form');
     form.submit();
   });
 
-  // remove item from cart
+  // Remove item and reload on click
   $('.remove-item').click(function (e) {
     var csrfToken = '{{ csrf_token }}';
     var itemId = $(this).attr('id').split('remove_')[1];
