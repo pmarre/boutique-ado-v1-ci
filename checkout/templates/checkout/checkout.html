@@ -2,9 +2,7 @@
 <!--  -->
 {% load static %}
 <!--  -->
-{% load bag_tools %}
-<!--  -->
-{% block extra_css %}
+{% load bag_tools %} {% block extra_css %}
 <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}" />
 {% endblock %}
 <!--  -->
@@ -62,7 +60,7 @@
           <p class="my-0 small">
             Size: {% if item.product.has_sizes %}{{ item.size|upper }}
             <!--  -->
-            {% else%}N/A{% endif %}
+            {% else %}N/A{% endif %}
           </p>
           <p class="my-0 small text-muted">Qty: {{ item.quantity }}</p>
         </div>
@@ -113,11 +111,11 @@
           <!--  -->
           {{ order_form.postcode | as_crispy_field }}
           <!--  -->
-          {{order_form.town_or_city | as_crispy_field }}
+          {{ order_form.town_or_city | as_crispy_field }}
           <!--  -->
-          {{order_form.street_address1 | as_crispy_field }}
+          {{ order_form.street_address1 | as_crispy_field }}
           <!--  -->
-          {{order_form.street_address2 | as_crispy_field }}
+          {{ order_form.street_address2 | as_crispy_field }}
           <!--  -->
           {{ order_form.county | as_crispy_field }}
           <div class="form-check form-check-inline float-right mr-0">
@@ -185,4 +183,13 @@
     </div>
   </div>
 </div>
+{% endblock %} {% block postloadjs %}
+<!--  -->
+{{ block.super }}
+<!--  -->
+{{ stripe_public_key|json_script:"id_stripe_public_key" }}
+<!--  -->
+{{ client_secret|json_script:"id_client_secret" }}
+<!--  -->
+<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 {% endblock %}
