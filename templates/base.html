@@ -6,10 +6,7 @@
     {% block meta %}
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     {% endblock %} {% block extra_meta %} {% endblock %} {% block corecss %}
     <link
       rel="stylesheet"
@@ -17,16 +14,10 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Lato&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% endblock %} {% block extra_css %} {% endblock %} {% block corejs %}
-    <script
-      src="https://kit.fontawesome.com/e9c73d7092.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/e9c73d7092.js" crossorigin="anonymous"></script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.min.js"
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -50,13 +41,9 @@
   <body>
     <header class="container-fluid fixed-top">
       <div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
-        <div
-          class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left"
-        >
+        <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
           <a href="{% url 'home' %}" class="nav-link main-logo-link">
-            <h2 class="logo-font text-black my-0">
-              <strong>Boutique</strong> Ado
-            </h2>
+            <h2 class="logo-font text-black my-0"><strong>Boutique</strong> Ado</h2>
           </a>
         </div>
         <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
@@ -97,26 +84,17 @@
                   <p class="my-0">My Account</p>
                 </div>
               </a>
-              <div
-                class="dropdown-menu border-0"
-                aria-labelledby="user-options"
-              >
+              <div class="dropdown-menu border-0" aria-labelledby="user-options">
                 {% if request.user.is_authenticated %}
                 <!--  -->
                 {% if request.user.is_superuser %}
                 <a href="" class="dropdown-item">Product Management</a>
                 {% endif %}
-                <a href="" class="dropdown-item">My Profile</a>
-                <a href="{% url 'account_logout' %}" class="dropdown-item"
-                  >Logout</a
-                >
+                <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
+                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                 {% else %}
-                <a href="{% url 'account_signup' %}" class="dropdown-item"
-                  >Register</a
-                >
-                <a href="{% url 'account_login' %}" class="dropdown-item"
-                  >Login</a
-                >
+                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
                 {% endif %}
               </div>
             </li>
